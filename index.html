@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SaiefAnime</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+  <style>
+    body { background: #141414; font-family: 'Helvetica Neue', sans-serif; }
+    .hero-bg { background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat; }
+    .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-hover:hover { transform: scale(1.12); z-index: 20; }
+    .modal { animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen">
+
+  <!-- LANDING PAGE (Before Login) -->
+  <div id="landing" class="min-h-screen hero-bg flex flex-col">
+    <nav class="flex items-center justify-between px-8 py-5">
+      <h1 class="text-4xl font-bold text-red-600 tracking-tighter">SaiefAnime</h1>
+      <button onclick="showLoginModal()" 
+              class="bg-red-600 hover:bg-red-700 px-6 py-2 rounded font-semibold">
+        Sign In
+      </button>
+    </nav>
+
+    <div class="flex-1 flex items-center justify-center text-center px-6">
+      <div class="max-w-2xl">
+        <h1 class="text-5xl md:text-6xl font-bold mb-4">Unlimited Anime, Endless Stories</h1>
+        <p class="text-2xl mb-8">Watch SaiefAnime originals, popular series & more.</p>
+        <button onclick="showLoginModal()" 
+                class="bg-red-600 hover:bg-red-700 text-2xl px-12 py-4 rounded font-bold">
+          Get Started
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div id="loginModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50 modal">
+    <div class="bg-zinc-900 p-10 rounded-xl w-full max-w-md">
+      <h2 class="text-4xl font-bold mb-8">Sign In</h2>
+      
+      <div class="space-y-6">
+        <input id="email" type="email" placeholder="Email or phone number" 
+               class="w-full bg-zinc-800 p-4 rounded text-lg focus:outline-none">
+        
+        <input id="password" type="password" placeholder="Password" 
+               class="w-full bg-zinc-800 p-4 rounded text-lg focus:outline-none">
+        
+        <button onclick="login()" 
+                class="w-full bg-red-600 hover:bg-red-700 py-4 rounded font-bold text-xl">
+          Sign In
+        </button>
+
+        <div class="flex justify-between text-sm text-gray-400">
+          <label><input type="checkbox" class="mr-2"> Remember me</label>
+          <a href="#" class="hover:underline">Need help?</a>
+        </div>
+
+        <p class="text-center text-gray-400">
+          New to SaiefAnime? 
+          <span onclick="switchToSignup()" class="text-white hover:underline cursor-pointer">Sign up now</span>
+        </p>
+      </div>
+
+      <button onclick="hideLoginModal()" class="absolute top-6 right-6 text-3xl">✕</button>
+    </div>
+  </div>
+
+  <!-- MAIN APP (After Login) -->
+  <div id="mainApp" class="hidden">
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur z-50">
+      <div class="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
+        <div class="flex items-center gap-8">
+          <h1 onclick="location.reload()" class="text-3xl font-bold tracking-tighter text-red-600 cursor-pointer">SaiefAnime</h1>
+          <div class="hidden md:flex gap-6 text-sm">
+            <a href="#" class="text-white">Home</a>
+            <a href="#" class="hover:text-gray-300">Series</a>
+            <a href="#" class="hover:text-gray-300">Movies</a>
+            <a href="#" class="hover:text-gray-300">New &amp; Popular</a>
+            <a href="#" class="hover:text-gray-300">My List</a>
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <i class="fa-solid fa-magnifying-glass text-xl cursor-pointer"></i>
+          <div onclick="showProfiles()" class="flex items-center gap-2 cursor-pointer">
+            <div class="w-8 h-8 bg-red-600 rounded"></div>
+            <span>Saief</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero-bg h-screen flex items-center pt-20">
+      <div class="max-w-2xl px-12">
+        <h2 class="text-6xl font-bold mb-4">Attack on Titan Final Season</h2>
+        <p class="text-xl mb-8">The battle for freedom reaches its epic conclusion.</p>
+        <div class="flex gap-4">
+          <button onclick="playVideo()" 
+                  class="bg-white text-black px-10 py-4 rounded font-bold text-xl flex items-center gap-3 hover:bg-gray-200">
+            <i class="fa-solid fa-play"></i> Play
+          </button>
+          <button class="bg-gray-500/70 px-10 py-4 rounded font-bold text-xl flex items-center gap-3 hover:bg-gray-400">
+            <i class="fa-solid fa-circle-info"></i> More Info
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Rows -->
+    <div class="max-w-7xl mx-auto px-8 -mt-16 relative z-10 pb-12">
+      <h3 class="text-2xl mb-4 font-semibold">Trending Now</h3>
+      <div class="flex gap-4 overflow-x-auto pb-8">
+        <div class="min-w-[260px] card-hover cursor-pointer" onclick="playVideo()">
+          <img src="F:\SaiefAnime\media\060da93464be9670e5ebf37a36af9834.jpg" class="rounded" alt="">
+          <p class="mt-2">Jujutsu Kaisen</p>
+        </div>
+        <div class="min-w-[260px] card-hover cursor-pointer" onclick="playVideo()">
+          <img src="https://picsum.photos/id/201/400/225" class="rounded" alt="">
+          <p class="mt-2">Solo Leveling</p>
+        </div>
+        <div class="min-w-[260px] card-hover cursor-pointer" onclick="playVideo()">
+          <img src="https://picsum.photos/id/180/400/225" class="rounded" alt="">
+          <p class="mt-2">Demon Slayer</p>
+        </div>
+        <!-- Add more cards -->
+      </div>
+    </div>
+
+    <footer class="text-center py-12 text-gray-500">© 2026 SaiefAnime</footer>
+  </div>
+
+  <script>
+    function showLoginModal() {
+      document.getElementById('loginModal').classList.remove('hidden');
+    }
+
+    function hideLoginModal() {
+      document.getElementById('loginModal').classList.add('hidden');
+    }
+
+    function login() {
+      const email = document.getElementById('email').value;
+      if (email) {
+        hideLoginModal();
+        document.getElementById('landing').classList.add('hidden');
+        document.getElementById('mainApp').classList.remove('hidden');
+        alert("✅ Welcome to SaiefAnime, Saief! 🎉");
+      } else {
+        alert("Please enter your email");
+      }
+    }
+
+    function switchToSignup() {
+      hideLoginModal();
+      alert("Sign Up page would open here.\n(We can add full signup form next if you want)");
+    }
+
+    function playVideo() {
+      alert("🎥 Starting video player...\n\n(In real app this would open full-screen HLS player with subtitles)");
+      // You can replace this with real video later
+    }
+
+    function showProfiles() {
+      alert("Profile Switcher:\n1. Saief\n2. Kids\n3. Add Profile");
+    }
+
+    // Allow pressing Enter in password field
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const modal = document.getElementById('loginModal');
+        if (!modal.classList.contains('hidden')) login();
+      }
+    });
+  </script>
+</body>
+</html>
