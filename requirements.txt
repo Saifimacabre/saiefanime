@@ -1,0 +1,5 @@
+django==6.0.6
+pillow
+gunicorn
+psycopg2-binary
+whitenoise

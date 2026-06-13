@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ anime.title }} - SaiefAnime</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+</head>
+<body class="bg-black text-white">
+  <nav class="fixed top-0 w-full bg-black/95 z-50 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-8">
+      <img src="{% static 'images/logo.jpg' %}" alt="SaiefAnime" class="h-10 cursor-pointer" onclick="location.href='/home/'">
+      <a href="/home/" class="text-red-500 hover:text-red-400 flex items-center gap-2">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home
+      </a>
+    </div>
+  </nav>
+
+  <div class="pt-20">
+    {% if anime %}
+      <!-- Video Player -->
+      <div class="bg-black aspect-video relative">
+        {% if anime.trailer_url %}
+          <iframe width="100%" height="100%" 
+                  src="{{ anime.trailer_url|safe }}" 
+                  frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+        {% else %}
+          <div class="w-full h-[70vh] flex items-center justify-center bg-zinc-950">
+            <div class="text-center">
+              <i class="fa-solid fa-play-circle text-8xl text-red-600 mb-6"></i>
+              <h2 class="text-4xl font-bold mb-4">{{ anime.title }}</h2>
+              <p class="text-xl text-gray-400">Full HD Video Player Coming Soon</p>
+              <p class="mt-8 text-gray-500">We will integrate real HLS/DASH streaming here later</p>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Anime Info -->
+      <div class="max-w-7xl mx-auto px-8 py-8 grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-2">
+          <h1 class="text-5xl font-bold">{{ anime.title }}</h1>
+          <p class="text-xl text-gray-400 mt-3">{{ anime.year }} • {{ anime.genre }} • {{ anime.rating }} ⭐ • {{ anime.episodes }} Episodes</p>
+          
+          <div class="mt-8 text-lg leading-relaxed">
+            {{ anime.description|default:"No description available yet." }}
+          </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div>
+          <h3 class="text-2xl font-semibold mb-6">More Like This</h3>
+          <div class="space-y-4">
+            {% for rec in recommendations %}
+              <div onclick="window.location.href='/watch/{{ rec.id }}/'" 
+                   class="flex gap-4 cursor-pointer hover:bg-zinc-900 p-2 rounded">
+                {% if rec.poster %}
+                  <img src="{{ rec.poster.url }}" class="w-28 rounded">
+                {% else %}
+                  <img src="https://picsum.photos/id/237/120/70" class="w-28 rounded">
+                {% endif %}
+                <div>
+                  <p class="font-medium">{{ rec.title }}</p>
+                  <p class="text-sm text-gray-400">{{ rec.year }} • {{ rec.rating }} ⭐</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p class="text-center text-2xl py-20">Anime not found 😢</p>
+    {% endif %}
+  </div>
+</body>
+</html>

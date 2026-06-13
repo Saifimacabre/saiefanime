@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SaiefAnime - Watch Anime</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+  <style>
+    body { background: #141414; }
+    .hero { background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://picsum.photos/id/1015/1920/1080') center/cover; }
+  </style>
+</head>
+<body class="text-white">
+  <nav class="flex justify-between items-center px-10 py-6 bg-black/80 fixed w-full z-50">
+    <img src="{% static 'images/logo.jpg' %}" alt="SaiefAnime" class="h-12 w-auto">
+    <a href="{% url 'login' %}" class="bg-red-600 hover:bg-red-700 px-6 py-2 rounded font-medium">Sign In</a>
+  </nav>
+
+  <div class="hero min-h-screen flex items-center justify-center text-center pt-20">
+    <div class="max-w-3xl px-6">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">Unlimited Anime.<br>Endless Stories.</h1>
+      <p class="text-2xl mb-8">Watch SaiefAnime originals, popular series and more.</p>
+      <a href="{% url 'signup' %}" class="bg-red-600 hover:bg-red-700 text-2xl px-16 py-5 rounded font-bold inline-block">
+        Get Started
+      </a>
+    </div>
+  </div>
+</body>
+</html>

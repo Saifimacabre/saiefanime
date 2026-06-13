@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In - SaiefAnime</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white min-h-screen flex items-center justify-center">
+  <div class="bg-zinc-900 p-12 rounded-2xl w-full max-w-md">
+    <h1 class="text-4xl font-bold text-center mb-10">Sign In</h1>
+
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-2">Username</label>
+        <input type="text" name="username" required class="w-full bg-zinc-800 border border-zinc-700 rounded px-5 py-4 text-white focus:outline-none focus:border-red-600">
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-2">Password</label>
+        <input type="password" name="password" required class="w-full bg-zinc-800 border border-zinc-700 rounded px-5 py-4 text-white focus:outline-none focus:border-red-600">
+      </div>
+
+      <button type="submit" class="w-full bg-red-600 hover:bg-red-700 py-4 rounded font-bold text-xl mt-6">
+        Sign In
+      </button>
+    </form>
+
+    <p class="text-center mt-8 text-gray-400">
+      New to SaiefAnime? 
+      <a href="{% url 'signup' %}" class="text-white hover:underline">Sign up now</a>
+    </p>
+  </div>
+</body>
+</html>

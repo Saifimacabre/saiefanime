@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SaiefAnime</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+  <style>
+    body { background: #141414; font-family: system-ui; }
+    .card { transition: all 0.4s; }
+    .card:hover { transform: scale(1.12); z-index: 10; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link:hover { color: #fff; }
+  </style>
+</head>
+<body class="text-white">
+  <!-- Netflix Style Navbar -->
+  <!-- Netflix Style Navbar -->
+   <!-- Netflix Style Navbar with Search -->
+  <nav class="fixed top-0 w-full bg-black/95 z-50 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-8">
+      <div class="flex items-center gap-8">
+        <img src="{% static 'images/logo.jpg' %}" alt="SaiefAnime" class="h-10 cursor-pointer" onclick="location.href='/home/'">
+        
+        <div class="hidden md:flex gap-6 text-sm font-medium">
+          <a href="/home/" class="nav-link text-white">Home</a>
+          <a href="/series/" class="nav-link">Series</a>
+          <a href="/movies/" class="nav-link">Movies</a>
+          <a href="/new/" class="nav-link">New & Popular</a>
+          <a href="/mylist/" class="nav-link">My List</a>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="flex-1 max-w-md mx-8">
+        <form action="{% url 'search' %}" method="GET" class="relative">
+          <input type="text" name="q" placeholder="Search anime or genre..." 
+                 class="w-full bg-zinc-900 border border-zinc-700 rounded-full px-5 py-3 pl-12 text-sm focus:outline-none focus:border-red-600">
+          <i class="fa-solid fa-magnifying-glass absolute left-5 top-3.5 text-gray-400"></i>
+        </form>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center text-sm">S</div>
+          <span class="hidden md:block">{{ username }}</span>
+        </div>
+        <form method="post" action="{% url 'logout' %}" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="text-red-500 hover:text-red-400">Logout</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pt-24 px-8 space-y-12">
+    <!-- Trending -->
+    <div>
+      <h2 class="text-3xl font-bold mb-6">Trending Now</h2>
+      <div class="flex gap-6 overflow-x-auto pb-8">
+        {% for anime in trending_anime %}
+          <div class="min-w-[260px] card cursor-pointer anime-card" data-id="{{ anime.id }}">
+            {% if anime.poster %}<img src="{{ anime.poster.url }}" class="rounded-lg w-full" alt="{{ anime.title }}">{% else %}
+            <img src="https://picsum.photos/id/237/400/225" class="rounded-lg w-full" alt="{{ anime.title }}">{% endif %}
+            <p class="mt-3 text-lg font-medium">{{ anime.title }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Popular -->
+    <div>
+      <h2 class="text-3xl font-bold mb-6">Popular on SaiefAnime</h2>
+      <div class="flex gap-6 overflow-x-auto pb-8">
+        {% for anime in all_anime %}
+          <div class="min-w-[260px] card cursor-pointer anime-card" data-id="{{ anime.id }}">
+            {% if anime.poster %}<img src="{{ anime.poster.url }}" class="rounded-lg w-full" alt="{{ anime.title }}">{% else %}
+            <img src="https://picsum.photos/id/237/400/225" class="rounded-lg w-full" alt="{{ anime.title }}">{% endif %}
+            <p class="mt-3 text-lg font-medium">{{ anime.title }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.anime-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        window.location.href = '/watch/' + id + '/';
+      });
+    });
+  </script>
+</body>
+</html>
